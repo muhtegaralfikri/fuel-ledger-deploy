@@ -1,0 +1,19 @@
+services:
+  api:
+    image: ghcr.io/muhtegaralfikri/fuel-ledger-api:latest
+    container_name: fuel-ledger-api
+    restart: unless-stopped
+    env_file:
+      - backend.env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  web:
+    image: ghcr.io/muhtegaralfikri/fuel-ledger-web:latest
+    container_name: fuel-ledger-web
+    restart: unless-stopped
+    depends_on:
+      - api
+    ports:
+      - "8092:80"
+
